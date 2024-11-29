@@ -1,13 +1,13 @@
-package com.cnd.notification_service.adapter.jpa;
+package com.notification_service.adapter.jpa;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.cnd.notification_service.adapter.jpa.entities.NotificationEntity;
-import com.cnd.notification_service.domain.models.Notification;
-import com.cnd.notification_service.ports.outgoing.NSRepository;
+import com.notification_service.adapter.jpa.entities.NotificationEntity;
+import com.notification_service.domain.models.Notification;
+import com.notification_service.ports.outgoing.NSRepository;
 
 @Service
 public class JpaNSRepositoryIm implements NSRepository {

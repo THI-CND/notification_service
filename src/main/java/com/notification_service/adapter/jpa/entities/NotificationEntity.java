@@ -1,4 +1,4 @@
-package com.cnd.notification_service.adapter.jpa.entities;
+package com.notification_service.adapter.jpa.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

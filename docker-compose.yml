@@ -13,9 +13,9 @@ services:
   notification-service:
     build: ./cnd-notification-service
     image: notification-service
-    command: java -jar /app/notification_service.jar
+    command: java -jar /app/notification-service.jar
     volumes:
-      - ./cnd-notification-service:/code
+      - ./notification-service:/code
     ports:
       - "8080:8080"
     restart: unless-stopped

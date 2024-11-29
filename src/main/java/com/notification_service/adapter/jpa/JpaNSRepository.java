@@ -1,6 +1,6 @@
-package com.cnd.notification_service.adapter.jpa;
+package com.notification_service.adapter.jpa;
 
-import com.cnd.notification_service.adapter.jpa.entities.NotificationEntity;
+import com.notification_service.adapter.jpa.entities.NotificationEntity;
 
 import java.util.List;
 

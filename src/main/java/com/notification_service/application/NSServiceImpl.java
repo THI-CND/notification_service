@@ -1,8 +1,8 @@
-package com.cnd.notification_service.application;
+package com.notification_service.application;
 
-import com.cnd.notification_service.domain.NSService;
-import com.cnd.notification_service.domain.models.Notification;
-import com.cnd.notification_service.ports.outgoing.NSRepository;
+import com.notification_service.domain.NSService;
+import com.notification_service.domain.models.Notification;
+import com.notification_service.ports.outgoing.NSRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

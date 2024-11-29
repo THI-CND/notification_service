@@ -1,8 +1,8 @@
-package com.cnd.notification_service.adapter.api;
+package com.notification_service.adapter.api;
 
 
-import com.cnd.notification_service.domain.NSService;
-import com.cnd.notification_service.domain.models.Notification;
+import com.notification_service.domain.NSService;
+import com.notification_service.domain.models.Notification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

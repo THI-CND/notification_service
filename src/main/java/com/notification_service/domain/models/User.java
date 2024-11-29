@@ -1,4 +1,4 @@
-package com.cnd.notification_service.domain.models;
+package com.notification_service.domain.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,9 +1,9 @@
-package com.cnd.notification_service.adapter.rabbitmq;
+package com.notification_service.adapter.rabbitmq;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
-import com.cnd.notification_service.domain.NSService;
-import com.cnd.notification_service.domain.models.Notification;
+import com.notification_service.domain.NSService;
+import com.notification_service.domain.models.Notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

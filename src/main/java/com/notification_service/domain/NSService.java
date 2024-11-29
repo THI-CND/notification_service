@@ -1,6 +1,6 @@
-package com.cnd.notification_service.domain;
+package com.notification_service.domain;
 
-import com.cnd.notification_service.domain.models.Notification;
+import com.notification_service.domain.models.Notification;
 
 import java.util.List;
 

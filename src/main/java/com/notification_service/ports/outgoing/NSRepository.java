@@ -1,4 +1,4 @@
-package com.cnd.notification_service.ports.outgoing;
+package com.notification_service.ports.outgoing;
 
 import java.util.List;
 
