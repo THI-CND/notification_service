@@ -17,10 +17,10 @@ FROM eclipse-temurin:21-jre
 WORKDIR /app
 
 # Kopiere das gebaute JAR-File vom vorherigen Build-Image
-COPY --from=build /app/target/*.jar notification-service.jar
+COPY --from=build /app/target/*.jar notification_service.jar
 
 # Exponiere den Port, auf dem der Service läuft
 EXPOSE 8080
 
 # Setze den Befehl zum Starten des Notification-Service
-#CMD ["java", "-jar", "notification_service.jar"]
+CMD ["java", "-jar", "notification_service.jar"]

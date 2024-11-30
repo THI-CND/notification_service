@@ -1,11 +1,11 @@
-package com.notification_service.adapter.jpa;
+package com.notification_service.adapter.out.jpa;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.notification_service.adapter.jpa.entities.NotificationEntity;
+import com.notification_service.adapter.out.jpa.entities.NotificationEntity;
 import com.notification_service.domain.models.Notification;
 import com.notification_service.ports.outgoing.NSRepository;
 

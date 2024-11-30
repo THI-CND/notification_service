@@ -1,4 +1,4 @@
-package com.notification_service.adapter.jpa.entities;
+package com.notification_service.adapter.out.jpa.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;

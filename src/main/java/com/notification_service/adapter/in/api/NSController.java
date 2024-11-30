@@ -1,4 +1,4 @@
-package com.notification_service.adapter.api;
+package com.notification_service.adapter.in.api;
 
 
 import com.notification_service.domain.NSService;

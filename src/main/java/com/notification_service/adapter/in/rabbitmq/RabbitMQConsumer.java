@@ -1,4 +1,4 @@
-package com.notification_service.adapter.rabbitmq;
+package com.notification_service.adapter.in.rabbitmq;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
@@ -8,13 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
-public class RabbitmqConsumer {
+public class RabbitMQConsumer {
     private final NSService nsService;
 
-    public RabbitmqConsumer(NSService nsService) {
+    public RabbitMQConsumer(NSService nsService) {
         this.nsService = nsService;
     }
-    private static final Logger logger = LoggerFactory.getLogger(RabbitmqConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger(RabbitMQConsumer.class);
 
     @RabbitListener(queues = "collection.updated")
     public void receiveMessage(Notification notification) {
