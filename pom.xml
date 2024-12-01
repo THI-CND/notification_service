@@ -84,7 +84,7 @@
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>10.20.0</version>
 				<configuration>
-					<url>jdbc:postgresql://postgres_db:5432/recipe_db</url>
+					<url>jdbc:postgresql://postgres:5432/recipe</url>
 					<user>postgres</user>
 					<password>qweasdyxc</password>
 				</configuration>
