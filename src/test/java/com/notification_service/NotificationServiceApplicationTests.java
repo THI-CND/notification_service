@@ -1,4 +1,4 @@
-package com.cnd.notification_service;
+package com.notification_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
