@@ -11,7 +11,7 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     
   notification-service:
-    build: ./cnd-notification-service
+    build: ./notification-service
     image: notification-service
     command: java -jar /app/notification-service.jar
     volumes:
