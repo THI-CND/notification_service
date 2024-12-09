@@ -25,7 +25,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding binding() {
-        return BindingBuilder.bind(queueCollectionUpdated()).to(exchange()).with("collection.updated");
+        return BindingBuilder.bind(queueCollectionUpdated()).to(exchange()).with("collection.updated.#");
     }
 
 }
