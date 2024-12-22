@@ -17,8 +17,9 @@ public class RabbitMQConsumer {
     private static final Logger logger = LoggerFactory.getLogger(RabbitMQConsumer.class);
 
     @RabbitListener(queues = "collection.updated")
+    @RabbitListener(queues = "collection.created")
+    @RabbitListener(queues = "collection.deleted")
     public void receiveMessage(Notification notification) {
-        //public void receiveMessage(String notification) {
         logger.info("Empfangene Nachricht <{}>", notification);
         nsService.saveNotification(notification);
     }

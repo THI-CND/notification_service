@@ -23,7 +23,7 @@ public class NSController {
 
     @GetMapping
     public ResponseEntity<List<Notification>> getNotifications(@RequestParam String username) {
-        logger.info("called username:" + username);
+        logger.info("aufgerufener username war:" + username);
         return new ResponseEntity<>(nsService.getNotifications(username), HttpStatus.OK);
     }
 }
