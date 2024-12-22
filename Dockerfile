@@ -1,4 +1,5 @@
-FROM maven:3.9.4-eclipse-temurin-21 AS build
+#FROM maven:3-eclipse-temurin-23 AS build
+FROM maven:3-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
@@ -11,7 +12,8 @@ COPY src ./src
 RUN mvn clean package
 
 # Verwende ein OpenJDK-Basis-Image zum Ausführen des Services
-FROM eclipse-temurin:21-jre
+#FROM eclipse-temurin:23-alpine
+FROM eclipse-temurin:17-jre
 
 # Setze das Arbeitsverzeichnis
 WORKDIR /app
