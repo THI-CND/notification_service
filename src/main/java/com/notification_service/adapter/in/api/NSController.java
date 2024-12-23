@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping("/notifications")
 @RestController
 public class NSController {
-    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(NSController.class);
 
     private final NSService nsService;
 
@@ -25,13 +24,11 @@ public class NSController {
 
     @GetMapping
     public List<NotificationResponse> getAllNotifications (@RequestParam String username) {
-        logger.info("aufgerufener username war:" + username);
         return nsService.getNotifications(username).stream().map(NotificationResponse::fromNotification).toList();
     }
 
     @GetMapping ("/status/{status}")
     public List<NotificationResponse> getAllNotificationsByStatus(@RequestParam String username, @PathVariable Notification.NotificationStatus status) {
-        logger.info("aufgerufener username war:" + username + " und status war:" + status);
         return nsService.getNotificationsByStatus(username, status).stream().map(NotificationResponse::fromNotification).toList();
     }
 
@@ -52,7 +49,6 @@ public class NSController {
     @PutMapping ("/{id}/status/{status}")
     public NotificationResponse updateNotificationStatus(@RequestParam String username, @PathVariable Long id, @PathVariable Notification.NotificationStatus status) {
         var notification = nsService.updateNotificationStatus(id, status);
-        logger.info("Notification war:" + notification);
         if (notification.isPresent()) {
             if (notification.get().getUser().equals(username)) {
                 return NotificationResponse.fromNotification(notification.get());
