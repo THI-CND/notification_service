@@ -1,5 +1,6 @@
 package com.notification_service.adapter.out.jpa.entities;
 
+import com.notification_service.domain.models.Notification;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,5 +29,9 @@ public class NotificationEntity {
     }
     public enum NotificationStatus {
         READ, UNREAD, DELETED
+    }
+
+    public Notification toNotification() {
+        return new Notification(getId(), getUsername(), getTitle(), getMessage(), Notification.NotificationStatus.valueOf(getStatus().name()));
     }
 }

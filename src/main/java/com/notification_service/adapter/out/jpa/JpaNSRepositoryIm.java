@@ -1,7 +1,7 @@
 package com.notification_service.adapter.out.jpa;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -20,9 +20,7 @@ public class JpaNSRepositoryIm implements NSRepository {
 
     @Override
     public List<Notification> findByUser(String username) {
-        return repo.findByUsername(username).stream()
-                .map(entity -> new Notification(entity.getId(), entity.getUsername(), entity.getTitle(), entity.getMessage(), Notification.NotificationStatus.valueOf(entity.getStatus().name())))
-                .collect(Collectors.toList());
+        return repo.findByUsername(username).stream().map(NotificationEntity::toNotification).toList();
     }
 
     @Override
@@ -33,9 +31,14 @@ public class JpaNSRepositoryIm implements NSRepository {
 
     @Override
     public List<Notification> findByUserAndStatus(String username, Notification.NotificationStatus status) {
+
         return repo.findByUsernameAndStatus(username, NotificationEntity.NotificationStatus.valueOf(status.name())).stream()
-                .map(entity -> new Notification(entity.getId(), entity.getUsername(), entity.getTitle(), entity.getMessage(), Notification.NotificationStatus.valueOf(entity.getStatus().name())))
-                .collect(Collectors.toList());
+                .map(NotificationEntity::toNotification).toList();
+    }
+
+    @Override
+    public Optional<Notification> findById(Long id) {
+        return repo.findById(id).map(NotificationEntity::toNotification);
     }
 
 }
