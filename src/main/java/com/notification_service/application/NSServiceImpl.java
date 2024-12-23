@@ -6,7 +6,6 @@ import com.notification_service.ports.outgoing.NSRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class NSServiceImpl implements NSService {

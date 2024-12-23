@@ -5,8 +5,6 @@ import com.notification_service.adapter.in.api.dto.NotificationResponse;
 import com.notification_service.domain.NSService;
 import com.notification_service.domain.models.Notification;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
