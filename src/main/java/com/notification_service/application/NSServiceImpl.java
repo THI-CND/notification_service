@@ -36,4 +36,9 @@ public class NSServiceImpl implements NSService {
     public Optional<Notification> getNotificationById(Long id) {
         return repository.findById(id);
     }
+
+    @Override
+    public Optional<Notification> updateNotificationStatus(Long id, Notification.NotificationStatus status) {
+        return repository.updateStatus(id, status);
+    }
 }

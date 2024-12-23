@@ -10,4 +10,5 @@ public interface NSService {
     void saveNotification(Notification notification);
     List<Notification> getNotificationsByStatus(String username, Notification.NotificationStatus status);
     Optional<Notification> getNotificationById(Long id);
+    Optional<Notification> updateNotificationStatus(Long id, Notification.NotificationStatus status);
 }

@@ -49,4 +49,18 @@ public class NSController {
         }
     }
 
+    @PutMapping ("/{id}/status/{status}")
+    public NotificationResponse updateNotificationStatus(@RequestParam String username, @PathVariable Long id, @PathVariable Notification.NotificationStatus status) {
+        var notification = nsService.updateNotificationStatus(id, status);
+        logger.info("Notification war:" + notification);
+        if (notification.isPresent()) {
+            if (notification.get().getUser().equals(username)) {
+                return NotificationResponse.fromNotification(notification.get());
+            } else {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to access this notification");
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Notification not found");
+        }
+    }
 }

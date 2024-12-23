@@ -10,4 +10,5 @@ public interface NSRepository {
     void save(Notification notification);
     List<Notification> findByUserAndStatus(String user, Notification.NotificationStatus status);
     Optional<Notification> findById(Long id);
+    Optional<Notification> updateStatus(Long id, Notification.NotificationStatus status);
 }

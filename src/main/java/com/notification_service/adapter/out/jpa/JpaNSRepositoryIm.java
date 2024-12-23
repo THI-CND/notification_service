@@ -41,5 +41,13 @@ public class JpaNSRepositoryIm implements NSRepository {
         return repo.findById(id).map(NotificationEntity::toNotification);
     }
 
+    @Override
+    public Optional<Notification> updateStatus(Long id, Notification.NotificationStatus status) {
+        return repo.findById(id).map(entity -> {
+            entity.setStatus(NotificationEntity.NotificationStatus.valueOf(status.name()));
+            return repo.save(entity).toNotification();
+        });
+    }
+
 }
 
