@@ -21,13 +21,13 @@ public class JpaNSRepositoryIm implements NSRepository {
     @Override
     public List<Notification> findByUser(String username) {
         return repo.findByUsername(username).stream()
-                .map(entity -> new Notification(entity.getId(), entity.getUsername(), entity.getTitle(), entity.getMessage()))
+                .map(entity -> new Notification(entity.getId(), entity.getUsername(), entity.getTitle(), entity.getMessage(), Notification.NotificationStatus.valueOf(entity.getStatus().name())))
                 .collect(Collectors.toList());
     }
 
     @Override
     public void save(Notification notification) {
-        NotificationEntity entity = new NotificationEntity(notification.getUser(), notification.getTitle(), notification.getMessage());
+        NotificationEntity entity = new NotificationEntity(notification.getUser(), notification.getTitle(), notification.getMessage(), NotificationEntity.NotificationStatus.UNREAD);
         repo.save(entity);
     }
 

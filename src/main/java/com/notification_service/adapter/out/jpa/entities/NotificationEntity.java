@@ -17,10 +17,16 @@ public class NotificationEntity {
     private String username;
     private String title;
     private String message;
+    @Enumerated(EnumType.STRING)
+    private NotificationStatus status;
 
-    public NotificationEntity(String username, String title, String message) {
+    public NotificationEntity(String username, String title, String message, NotificationStatus status) {
         this.username = username;
         this.title = title;
         this.message = message;
+        this.status = status;
+    }
+    public enum NotificationStatus {
+        READ, UNREAD, DELETED
     }
 }

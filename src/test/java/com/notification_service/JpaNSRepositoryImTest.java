@@ -1,4 +1,7 @@
-/*package com.notification_service;
+/*
+auskommentiert lassen
+
+package com.notification_service;
 
 import com.notification_service.adapter.out.jpa.JpaNSRepository;
 import com.notification_service.adapter.out.jpa.JpaNSRepositoryIm;

@@ -12,4 +12,9 @@ public class Notification {
     private String user;
     private String title;
     private String message;
+    private NotificationStatus status;
+
+    public enum NotificationStatus {
+        READ, UNREAD, DELETED
+    }
 }
