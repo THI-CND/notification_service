@@ -19,6 +19,15 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public Queue queueCollectionCreated() {
+        return new Queue("collection.created");
+    }
+    @Bean
+    public Queue queueCollectionDeleted() {
+        return new Queue("collection.deleted");
+    }
+
+    @Bean
     public TopicExchange exchange() {
         return new TopicExchange("collection_service_exchange");
     }

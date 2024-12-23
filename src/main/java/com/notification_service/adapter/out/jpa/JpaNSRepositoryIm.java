@@ -31,5 +31,12 @@ public class JpaNSRepositoryIm implements NSRepository {
         repo.save(entity);
     }
 
+    @Override
+    public List<Notification> findByUserAndStatus(String username, Notification.NotificationStatus status) {
+        return repo.findByUsernameAndStatus(username, NotificationEntity.NotificationStatus.valueOf(status.name())).stream()
+                .map(entity -> new Notification(entity.getId(), entity.getUsername(), entity.getTitle(), entity.getMessage(), Notification.NotificationStatus.valueOf(entity.getStatus().name())))
+                .collect(Collectors.toList());
+    }
+
 }
 

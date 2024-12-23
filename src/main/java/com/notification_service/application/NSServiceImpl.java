@@ -6,6 +6,7 @@ import com.notification_service.ports.outgoing.NSRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NSServiceImpl implements NSService {
@@ -24,5 +25,10 @@ public class NSServiceImpl implements NSService {
     @Override
     public void saveNotification(Notification notification) {
         repository.save(notification);
+    }
+
+    @Override
+    public List<Notification> getNotificationsByStatus(String username, Notification.NotificationStatus status) {
+        return repository.findByUserAndStatus(username, status);
     }
 }

@@ -28,11 +28,11 @@ public class NSController {
         return new ResponseEntity<>(nsService.getNotifications(username), HttpStatus.OK);
     }
 
-    /*@GetMapping
-    public ResponseEntity<List<Notification>> getAllUserNotificationsByStatus(@RequestParam String username, @RequestParam Notification.NotificationStatus status) {
+    @GetMapping ("/{status}")
+    public ResponseEntity<List<Notification>> getAllNotificationsByStatus(@RequestParam String username, @PathVariable Notification.NotificationStatus status) {
         logger.info("aufgerufener username war:" + username + " und status war:" + status);
         return new ResponseEntity<>(nsService.getNotificationsByStatus(username, status), HttpStatus.OK);
     }
-*/
+
 
 }

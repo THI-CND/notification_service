@@ -7,4 +7,5 @@ import java.util.List;
 public interface NSService {
     List<Notification> getNotifications(String username);
     void saveNotification(Notification notification);
+    List<Notification> getNotificationsByStatus(String username, Notification.NotificationStatus status);
 }

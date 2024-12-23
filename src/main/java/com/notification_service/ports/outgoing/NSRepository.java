@@ -7,4 +7,5 @@ import com.notification_service.domain.models.Notification;
 public interface NSRepository {
     List<Notification> findByUser(String user);
     void save(Notification notification);
+    List<Notification> findByUserAndStatus(String user, Notification.NotificationStatus status);
 }
