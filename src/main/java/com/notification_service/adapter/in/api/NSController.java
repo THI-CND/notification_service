@@ -1,6 +1,7 @@
 package com.notification_service.adapter.in.api;
 
 
+import com.notification_service.adapter.in.api.dto.NotificationResponse;
 import com.notification_service.domain.NSService;
 import com.notification_service.domain.models.Notification;
 
@@ -23,16 +24,14 @@ public class NSController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Notification>> getAllNotifications(@RequestParam String username) {
+    public List<NotificationResponse> getAllNotifications (@RequestParam String username) {
         logger.info("aufgerufener username war:" + username);
-        return new ResponseEntity<>(nsService.getNotifications(username), HttpStatus.OK);
+        return nsService.getNotifications(username).stream().map(NotificationResponse::fromNotification).toList();
     }
 
     @GetMapping ("/{status}")
-    public ResponseEntity<List<Notification>> getAllNotificationsByStatus(@RequestParam String username, @PathVariable Notification.NotificationStatus status) {
+    public List<NotificationResponse> getAllNotificationsByStatus(@RequestParam String username, @PathVariable Notification.NotificationStatus status) {
         logger.info("aufgerufener username war:" + username + " und status war:" + status);
-        return new ResponseEntity<>(nsService.getNotificationsByStatus(username, status), HttpStatus.OK);
+        return nsService.getNotificationsByStatus(username, status).stream().map(NotificationResponse::fromNotification).toList();
     }
-
-
 }

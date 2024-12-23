@@ -1,5 +1,6 @@
 package com.notification_service.adapter.in.rabbitmq;
 
+import com.notification_service.adapter.in.rabbitmq.dto.NotificationMessage;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 import com.notification_service.domain.NSService;
@@ -16,11 +17,9 @@ public class RabbitMQConsumer {
     }
     private static final Logger logger = LoggerFactory.getLogger(RabbitMQConsumer.class);
 
-    @RabbitListener(queues = "collection.updated")
-    @RabbitListener(queues = "collection.created")
-    @RabbitListener(queues = "collection.deleted")
-    public void receiveMessage(Notification notification) {
-        logger.info("Empfangene Nachricht <{}>", notification);
-        nsService.saveNotification(notification);
+    @RabbitListener(queues = {"collection.updated","collection.deleted", "collection.created"})
+    public void receiveMessage(NotificationMessage notificationMessage) {
+        logger.info("Empfangene Nachricht <{}>", notificationMessage);
+        nsService.saveNotification(new Notification(null, notificationMessage.getUser(), notificationMessage.getTitle(), notificationMessage.getMessage(), notificationMessage.getStatus()));
     }
 }
