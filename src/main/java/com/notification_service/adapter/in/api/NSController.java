@@ -25,12 +25,23 @@ public class NSController {
 
     @GetMapping
     public List<NotificationResponse> getAllNotifications (@RequestParam String username) {
-        return nsService.getNotifications(username).stream().map(NotificationResponse::fromNotification).toList();
+        var notifications = nsService.getNotifications(username).stream().map(NotificationResponse::fromNotification).toList();
+        if (notifications.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT); // 204 No Content
+        }
+        return notifications;
     }
 
     @GetMapping ("/status/{status}")
     public List<NotificationResponse> getAllNotificationsByStatus(@RequestParam String username, @PathVariable Notification.NotificationStatus status) {
-        return nsService.getNotificationsByStatus(username, status).stream().map(NotificationResponse::fromNotification).toList();
+        var notifications = nsService.getNotificationsByStatus(username, status)
+                .stream()
+                .map(NotificationResponse::fromNotification)
+                .toList();
+        if (notifications.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT); // 204 No Content
+        }
+        return notifications;
     }
 
     @GetMapping ("/{id}")
