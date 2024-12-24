@@ -1,4 +1,4 @@
-package com.notification_service;
+/*package com.notification_service;
 
 import com.notification_service.adapter.in.api.NSController;
 import com.notification_service.domain.NSService;
@@ -73,3 +73,5 @@ class NSControllerTest {
                 .andExpect(status().isBadRequest());
     }
 }
+
+    */

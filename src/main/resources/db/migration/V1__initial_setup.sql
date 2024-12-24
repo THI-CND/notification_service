@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS notifications (
     username VARCHAR(255) NOT NULL,        -- Foreign key to the users table
     title VARCHAR(255) NOT NULL,     -- Title of the notification
     message TEXT NOT NULL,           -- Message content of the notification
+    status VARCHAR(20) NOT NULL,     -- Status of the notification
     CONSTRAINT fk_user_username
         FOREIGN KEY (username)
         REFERENCES users (username)

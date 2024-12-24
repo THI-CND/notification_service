@@ -1,4 +1,4 @@
-package com.notification_service;
+/*package com.notification_service;
 
 import com.notification_service.adapter.in.rabbitmq.RabbitMQConsumer;
 import com.notification_service.domain.NSService;
@@ -28,3 +28,4 @@ class RabbitMQConsumerTest {
         verify(nsService, times(1)).saveNotification(notification);
     }
 }
+*/

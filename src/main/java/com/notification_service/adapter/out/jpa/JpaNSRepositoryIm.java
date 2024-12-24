@@ -1,7 +1,7 @@
 package com.notification_service.adapter.out.jpa;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -20,15 +20,33 @@ public class JpaNSRepositoryIm implements NSRepository {
 
     @Override
     public List<Notification> findByUser(String username) {
-        return repo.findByUsername(username).stream()
-                .map(entity -> new Notification(entity.getId(), entity.getUsername(), entity.getTitle(), entity.getMessage()))
-                .collect(Collectors.toList());
+        return repo.findByUsername(username).stream().map(NotificationEntity::toNotification).toList();
     }
 
     @Override
     public void save(Notification notification) {
-        NotificationEntity entity = new NotificationEntity(notification.getUser(), notification.getTitle(), notification.getMessage());
+        NotificationEntity entity = new NotificationEntity(notification.getUser(), notification.getTitle(), notification.getMessage(), NotificationEntity.NotificationStatus.UNREAD);
         repo.save(entity);
+    }
+
+    @Override
+    public List<Notification> findByUserAndStatus(String username, Notification.NotificationStatus status) {
+
+        return repo.findByUsernameAndStatus(username, NotificationEntity.NotificationStatus.valueOf(status.name())).stream()
+                .map(NotificationEntity::toNotification).toList();
+    }
+
+    @Override
+    public Optional<Notification> findById(Long id) {
+        return repo.findById(id).map(NotificationEntity::toNotification);
+    }
+
+    @Override
+    public Optional<Notification> updateStatus(Long id, Notification.NotificationStatus status) {
+        return repo.findById(id).map(entity -> {
+            entity.setStatus(NotificationEntity.NotificationStatus.valueOf(status.name()));
+            return repo.save(entity).toNotification();
+        });
     }
 
 }
