@@ -1,6 +1,7 @@
 package com.notification_service.adapter.in.api;
 
 
+import com.notification_service.adapter.in.api.dto.NotificationRequest;
 import com.notification_service.adapter.in.api.dto.NotificationResponse;
 import com.notification_service.domain.NSService;
 import com.notification_service.domain.models.Notification;
@@ -11,7 +12,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-//Wenn Listen leer, dann muss Statuscode 204 zurückgegeben werden!!!!!!!!!
 
 @RequestMapping("/notifications")
 @RestController
@@ -58,9 +58,9 @@ public class NSController {
         }
     }
 
-    @PutMapping ("/{id}/status/{status}")
-    public NotificationResponse updateNotificationStatus(@RequestParam String username, @PathVariable Long id, @PathVariable Notification.NotificationStatus status) {
-        var notification = nsService.updateNotificationStatus(id, status);
+    @PutMapping ("/{id}")
+    public NotificationResponse updateNotificationStatus(@RequestParam String username, @PathVariable Long id, @RequestBody NotificationRequest request) {
+        var notification = nsService.updateNotificationStatus(id, request.getStatus());
         if (notification.isPresent()) {
             if (notification.get().getUser().equals(username)) {
                 return NotificationResponse.fromNotification(notification.get());
