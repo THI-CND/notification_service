@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+//Wenn Listen leer, dann muss Statuscode 204 zurückgegeben werden!!!!!!!!!
 
 @RequestMapping("/notifications")
 @RestController
