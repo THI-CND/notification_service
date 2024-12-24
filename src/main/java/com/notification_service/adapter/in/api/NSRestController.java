@@ -15,11 +15,11 @@ import java.util.List;
 
 @RequestMapping("/notifications")
 @RestController
-public class NSController {
+public class NSRestController {
 
     private final NSService nsService;
 
-    public NSController(NSService nsService) {
+    public NSRestController(NSService nsService) {
         this.nsService = nsService;
     }
 
