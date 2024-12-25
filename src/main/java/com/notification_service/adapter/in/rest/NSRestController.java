@@ -1,8 +1,8 @@
-package com.notification_service.adapter.in.api;
+package com.notification_service.adapter.in.rest;
 
 
-import com.notification_service.adapter.in.api.dto.NotificationRequest;
-import com.notification_service.adapter.in.api.dto.NotificationResponse;
+import com.notification_service.adapter.in.rest.dto.NotificationRequest;
+import com.notification_service.adapter.in.rest.dto.NotificationResponse;
 import com.notification_service.domain.NSService;
 import com.notification_service.domain.models.Notification;
 

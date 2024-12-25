@@ -1,4 +1,4 @@
-package com.notification_service.adapter.in.api.dto;
+package com.notification_service.adapter.in.rest.dto;
 
 import com.notification_service.domain.models.Notification;
 import lombok.AllArgsConstructor;
