@@ -28,36 +28,13 @@ public class NSGrpcController extends NotificationServiceGrpc.NotificationServic
 
     @Override
     public void getNotificationById(GetNotificationByIdRequest request, StreamObserver<NotificationResponse> responseObserver) {
-        var notificationOpt = nsService.getNotificationById(request.getId());
-
-        if (notificationOpt.isPresent()) {
-            Notification notification = notificationOpt.get();
-            if (notification.getUser().equals(request.getUsername())) {
-                responseObserver.onNext(GrpcDto.toNotificationResponse(notification));
-                responseObserver.onCompleted();
-            } else {
-                responseObserver.onError(Status.PERMISSION_DENIED.withDescription("Access Denied").asException());
-            }
-        } else {
-            responseObserver.onError(Status.NOT_FOUND.withDescription("Notification Not Found").asException());
-        }
+        handleNotificationResponse(request.getId(), request.getUsername(), responseObserver);
     }
 
     @Override
     public void updateNotificationStatus(UpdateNotificationStatusRequest request, StreamObserver<NotificationResponse> responseObserver) {
         var notificationOpt = nsService.updateNotificationStatus(request.getId(), Notification.NotificationStatus.valueOf(request.getStatus().name()));
-
-        if (notificationOpt.isPresent()) {
-            Notification notification = notificationOpt.get();
-            if (notification.getUser().equals(request.getUsername())) {
-                responseObserver.onNext(GrpcDto.toNotificationResponse(notification));
-                responseObserver.onCompleted();
-            } else {
-                responseObserver.onError(Status.PERMISSION_DENIED.withDescription("Access Denied").asException());
-            }
-        } else {
-            responseObserver.onError(Status.NOT_FOUND.withDescription("Notification Not Found").asException());
-        }
+        handleNotificationResponse(notificationOpt, request.getUsername(), responseObserver);
     }
 
     @Override
@@ -68,5 +45,25 @@ public class NSGrpcController extends NotificationServiceGrpc.NotificationServic
         );
         responseObserver.onNext(GrpcDto.toGetAllNotificationsResponse(notifications));
         responseObserver.onCompleted();
+    }
+
+
+    private void handleNotificationResponse(Long id, String username, StreamObserver<NotificationResponse> responseObserver) {
+        var notificationOpt = nsService.getNotificationById(id);
+        handleNotificationResponse(notificationOpt, username, responseObserver);
+    }
+
+    private void handleNotificationResponse(java.util.Optional<Notification> notificationOpt, String username, StreamObserver<NotificationResponse> responseObserver) {
+        if (notificationOpt.isPresent()) {
+            Notification notification = notificationOpt.get();
+            if (notification.getUser().equals(username)) {
+                responseObserver.onNext(GrpcDto.toNotificationResponse(notification));
+                responseObserver.onCompleted();
+            } else {
+                responseObserver.onError(Status.PERMISSION_DENIED.withDescription("Access Denied").asException());
+            }
+        } else {
+            responseObserver.onError(Status.NOT_FOUND.withDescription("Notification Not Found").asException());
+        }
     }
 }
