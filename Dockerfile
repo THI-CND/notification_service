@@ -9,7 +9,8 @@ RUN mvn dependency:go-offline
 
 # Kopiere den Rest des Projekts und baue es
 COPY src ./src
-RUN mvn clean package
+#RUN mvn clean package
+RUN mvn clean install
 
 # Verwende ein OpenJDK-Basis-Image zum Ausführen des Services
 #FROM eclipse-temurin:23-alpine
