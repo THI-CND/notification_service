@@ -47,7 +47,6 @@ public class NSGrpcController extends NotificationServiceGrpc.NotificationServic
         responseObserver.onCompleted();
     }
 
-
     private void handleNotificationResponse(Long id, String username, StreamObserver<NotificationResponse> responseObserver) {
         var notificationOpt = nsService.getNotificationById(id);
         handleNotificationResponse(notificationOpt, username, responseObserver);
