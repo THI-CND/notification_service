@@ -170,7 +170,7 @@
 							<target>
 								<exec executable="sh">
 									<arg value="-c"/>
-									<arg value="find ${project.build.directory}/generated-sources -name '*.java' -exec sed -i '' 's/javax.annotation.Generated/jakarta.annotation.Generated/g' {} +"/>
+									<arg value="find ${project.build.directory}/generated-sources -name '*.java' -exec sed -i 's/javax.annotation.Generated/jakarta.annotation.Generated/g' {} +"/>
 								</exec>
 							</target>
 						</configuration>
