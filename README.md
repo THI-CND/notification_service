@@ -43,25 +43,91 @@ Ruft alle Benachrichtigungen mit einem bestimmten Status für einen bestimmten B
 **Beispiel:**
 GET "http://localhost:8080/notifications/status/UNREAD?username=Bernd"
 
-#### PUT /notifications/{id}/status/{status}
+#### PUT /notifications/{id}
 
 Aktualisiert den Status einer Benachrichtigung.
 
 **Request:**
 - Methode: PUT
-- URL: `/notifications/{id}/status/{status}`
+- URL: `/notifications/{id}`
 - Parameter:
   - `username` (String): Der Benutzername des Benutzers, der die Benachrichtigung aktualisiert.
   - `id` (Long): Die ID der Benachrichtigung.
-  - `status` (Notification.NotificationStatus): Der neue Status der Benachrichtigung (READ, UNREAD, DELETED).
+  - **Body:**
+    ```json
+    {
+      "status": "READ | UNREAD | DELETED"
+    }
+    ```
 
 **Response:**
 - Status: 200 OK
 - Body: Die aktualisierte Benachrichtigung.
 
 **Beispiel:**
-PUT "http://localhost:8080/notifications/1/status/READ?username=Bernd"
+PUT "http://localhost:8080/notifications/1?username=Bernd"
+```json
+{
+  "status": "READ"
+}
+```
+____
+### gRPC API
 
+```java
+syntax = "proto3";
+
+package com.notification_service.stubs;
+
+option java_multiple_files = true;
+option java_package = "com.notification_service.stubs";
+option java_outer_classname = "NotificationServiceProto";
+
+service NotificationService {
+rpc GetAllNotifications (GetAllNotificationsRequest) returns (GetAllNotificationsResponse);
+rpc GetNotificationById (GetNotificationByIdRequest) returns (NotificationResponse);
+rpc UpdateNotificationStatus (UpdateNotificationStatusRequest) returns (NotificationResponse);
+rpc GetNotificationsByStatus (GetNotificationsByStatusRequest) returns (GetAllNotificationsResponse);
+}
+
+enum NotificationStatus {
+READ = 0;
+UNREAD = 1;
+DELETED = 2;
+}
+message GetAllNotificationsRequest {
+string username = 1;
+}
+
+message GetAllNotificationsResponse {
+repeated NotificationResponse notifications = 1;
+}
+
+message GetNotificationsByStatusRequest {
+string username = 1;
+NotificationStatus status = 2;
+}
+
+message GetNotificationByIdRequest {
+string username = 1;
+int64 id = 2;
+}
+
+message UpdateNotificationStatusRequest {
+string username = 1;
+int64 id = 2;
+NotificationStatus status = 3;
+}
+
+message NotificationResponse {
+int64 id = 1;
+string user = 2;
+string title = 3;
+string message = 4;
+NotificationStatus status = 5;
+}
+```
+____
 ### RabbitMQ Consumer
 
 #### Queues: `collection.updated`, `collection.deleted`, `collection.created`
@@ -93,6 +159,7 @@ Eine RabbitMQ-Nachricht muss das folgende JSON-Format haben, damit sie korrekt v
   "status": "READ | UNREAD | DELETED"
 }
 ```
+____
 
 ### Datenbank
 
