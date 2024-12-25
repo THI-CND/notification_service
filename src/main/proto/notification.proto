@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package com.notification_service.stubs;
+
+option java_multiple_files = true;
+option java_package = "com.notification_service.stubs";
+option java_outer_classname = "NotificationServiceProto";
+
+service NotificationService {
+  rpc GetAllNotifications (GetAllNotificationsRequest) returns (GetAllNotificationsResponse);
+  rpc GetNotificationById (GetNotificationByIdRequest) returns (NotificationResponse);
+  rpc UpdateNotificationStatus (UpdateNotificationStatusRequest) returns (NotificationResponse);
+  rpc GetNotificationsByStatus (GetNotificationsByStatusRequest) returns (GetAllNotificationsResponse);
+}
+
+enum NotificationStatus {
+  READ = 0;
+  UNREAD = 1;
+  DELETED = 2;
+}
+message GetAllNotificationsRequest {
+  string username = 1;
+}
+
+message GetAllNotificationsResponse {
+  repeated NotificationResponse notifications = 1;
+}
+
+message GetNotificationsByStatusRequest {
+  string username = 1;
+  NotificationStatus status = 2;
+}
+
+message GetNotificationByIdRequest {
+  string username = 1;
+  int64 id = 2;
+}
+
+message UpdateNotificationStatusRequest {
+  string username = 1;
+  int64 id = 2;
+  NotificationStatus status = 3;
+}
+
+message NotificationResponse {
+  int64 id = 1;
+  string user = 2;
+  string title = 3;
+  string message = 4;
+  NotificationStatus status = 5;
+}
