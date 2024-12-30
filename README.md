@@ -3,7 +3,7 @@
 ## Übersicht
 
 Der Notification Service verwaltet Benachrichtigungen für Benutzer. 
-
+____
 ## Schnittstellen
 
 ### REST API
