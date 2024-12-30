@@ -20,7 +20,7 @@ public class GrpcDto {
     public static NotificationResponse toNotificationResponse(Notification notification) {
         NotificationResponse.Builder builder = NotificationResponse.newBuilder()
                 .setId(notification.getId())
-                .setUser(notification.getUser())
+                .setUsername(notification.getUsername())
                 .setTitle(notification.getTitle())
                 .setStatus(NotificationStatus.valueOf(notification.getStatus().name()));
         if (notification.getMessage() != null) {

@@ -19,7 +19,7 @@ public class NotificationResponse {
     public static NotificationResponse fromNotification(Notification notification) {
         return new NotificationResponse(
                 notification.getId(),
-                notification.getUser(),
+                notification.getUsername(),
                 notification.getTitle(),
                 notification.getMessage(),
                 notification.getStatus());

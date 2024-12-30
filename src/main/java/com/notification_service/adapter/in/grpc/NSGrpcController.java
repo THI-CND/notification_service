@@ -55,7 +55,7 @@ public class NSGrpcController extends NotificationServiceGrpc.NotificationServic
     private void handleNotificationResponse(java.util.Optional<Notification> notificationOpt, String username, StreamObserver<NotificationResponse> responseObserver) {
         if (notificationOpt.isPresent()) {
             Notification notification = notificationOpt.get();
-            if (notification.getUser().equals(username)) {
+            if (notification.getUsername().equals(username)) {
                 responseObserver.onNext(GrpcDto.toNotificationResponse(notification));
                 responseObserver.onCompleted();
             } else {

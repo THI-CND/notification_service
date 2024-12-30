@@ -25,7 +25,7 @@ public class JpaNSRepositoryIm implements NSRepository {
 
     @Override
     public void save(Notification notification) {
-        NotificationEntity entity = new NotificationEntity(notification.getUser(), notification.getTitle(), notification.getMessage(), NotificationEntity.NotificationStatus.UNREAD);
+        NotificationEntity entity = new NotificationEntity(notification.getUsername(), notification.getTitle(), notification.getMessage(), NotificationEntity.NotificationStatus.UNREAD);
         repo.save(entity);
     }
 
