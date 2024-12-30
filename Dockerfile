@@ -1,5 +1,8 @@
-#FROM maven:3-eclipse-temurin-23 AS build
-FROM maven:3-eclipse-temurin-17 AS build
+FROM maven:3-eclipse-temurin-23 AS build
+#FROM maven:3-eclipse-temurin-17 AS build
+
+# Workaround für das Problem, dass die JVM auf ARM64-Systemen nicht startet
+ENV JAVA_TOOL_OPTIONS="-XX:UseSVE=0"
 
 WORKDIR /app
 
@@ -13,8 +16,9 @@ RUN mvn clean package
 #RUN mvn clean install
 
 # Verwende ein OpenJDK-Basis-Image zum Ausführen des Services
-#FROM eclipse-temurin:23-alpine
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:23-alpine
+#FROM eclipse-temurin:17-jre
+
 
 # Setze das Arbeitsverzeichnis
 WORKDIR /app
