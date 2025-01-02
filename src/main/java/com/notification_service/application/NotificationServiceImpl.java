@@ -1,19 +1,19 @@
 package com.notification_service.application;
 
-import com.notification_service.domain.NSService;
+import com.notification_service.domain.NotificationService;
 import com.notification_service.domain.models.Notification;
-import com.notification_service.ports.outgoing.NSRepository;
+import com.notification_service.ports.outgoing.NotificationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class NSServiceImpl implements NSService {
+public class NotificationServiceImpl implements NotificationService {
 
-    private final NSRepository repository;
+    private final NotificationRepository repository;
 
-    public NSServiceImpl(NSRepository repository) {
+    public NotificationServiceImpl(NotificationRepository repository) {
         this.repository = repository;
     }
     

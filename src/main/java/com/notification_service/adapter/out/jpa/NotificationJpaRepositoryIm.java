@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.notification_service.adapter.out.jpa.entities.NotificationEntity;
 import com.notification_service.domain.models.Notification;
-import com.notification_service.ports.outgoing.NSRepository;
+import com.notification_service.ports.outgoing.NotificationRepository;
 
 @Service
-public class JpaNSRepositoryIm implements NSRepository {
+public class NotificationJpaRepositoryIm implements NotificationRepository {
 
-    private final JpaNSRepository repo;
+    private final NotificationJpaRepository repo;
 
-    public JpaNSRepositoryIm(JpaNSRepository repo) {
+    public NotificationJpaRepositoryIm(NotificationJpaRepository repo) {
         this.repo = repo;
     }
 

@@ -27,8 +27,8 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar notification_service.jar
 
 # Exponiere den Port, auf dem der Service läuft
-EXPOSE 8081
-EXPOSE 9091
+EXPOSE 8080
+EXPOSE 9090
 
 # Setze den Befehl zum Starten des Notification-Service
 CMD ["java", "-jar", "notification_service.jar"]

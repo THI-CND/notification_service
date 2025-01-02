@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface JpaNSRepository extends CrudRepository<NotificationEntity, Long> {
+public interface NotificationJpaRepository extends CrudRepository<NotificationEntity, Long> {
     List<NotificationEntity> findByUsername(String username);
     List<NotificationEntity> findByUsernameAndStatus(String username, NotificationEntity.NotificationStatus status);
 }

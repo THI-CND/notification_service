@@ -5,13 +5,13 @@ import com.notification_service.stubs.*;
 
 import java.util.List;
 
-public class GrpcDto {
+public class NotificationGrpcMapper {
 
     public static GetAllNotificationsResponse toGetAllNotificationsResponse(List<Notification> notifications) {
         return GetAllNotificationsResponse.newBuilder()
                 .addAllNotifications(
                         notifications.stream()
-                                .map(GrpcDto::toNotificationResponse)
+                                .map(NotificationGrpcMapper::toNotificationResponse)
                                 .toList()
                 )
                 .build();
