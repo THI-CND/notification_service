@@ -150,11 +150,6 @@
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>10.20.0</version>
-				<configuration>
-					<url>jdbc:postgresql://postgres:5432/recipe</url>
-					<user>postgres</user>
-					<password>qweasdyxc</password>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

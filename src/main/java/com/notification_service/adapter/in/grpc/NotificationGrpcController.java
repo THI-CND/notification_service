@@ -1,6 +1,6 @@
 package com.notification_service.adapter.in.grpc;
 
-import com.notification_service.adapter.in.grpc.dto.NotificationGrpcMapper;
+import com.notification_service.adapter.in.grpc.grpcmapper.NotificationGrpcMapper;
 import com.notification_service.domain.NotificationService;
 import com.notification_service.domain.models.Notification;
 import com.notification_service.stubs.*;
