@@ -3,7 +3,7 @@ package com.notification_service.adapter.in.rest;
 
 import com.notification_service.adapter.in.rest.dto.NotificationRequest;
 import com.notification_service.adapter.in.rest.dto.NotificationResponse;
-import com.notification_service.domain.NSService;
+import com.notification_service.domain.NotificationService;
 import com.notification_service.domain.models.Notification;
 
 import org.springframework.http.HttpStatus;
@@ -15,11 +15,11 @@ import java.util.List;
 
 @RequestMapping("/notifications")
 @RestController
-public class NSRestController {
+public class NotificationRestController {
 
-    private final NSService nsService;
+    private final NotificationService nsService;
 
-    public NSRestController(NSService nsService) {
+    public NotificationRestController(NotificationService nsService) {
         this.nsService = nsService;
     }
 
@@ -48,7 +48,7 @@ public class NSRestController {
     public NotificationResponse getNotificationById(@RequestParam String username, @PathVariable Long id) {
         var notification = nsService.getNotificationById(id);
         if (notification.isPresent()) {
-            if (notification.get().getUser().equals(username)) {
+            if (notification.get().getUsername().equals(username)) {
                 return NotificationResponse.fromNotification(notification.get());
             } else {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to access this notification");
@@ -62,7 +62,7 @@ public class NSRestController {
     public NotificationResponse updateNotificationStatus(@RequestParam String username, @PathVariable Long id, @RequestBody NotificationRequest request) {
         var notification = nsService.updateNotificationStatus(id, request.getStatus());
         if (notification.isPresent()) {
-            if (notification.get().getUser().equals(username)) {
+            if (notification.get().getUsername().equals(username)) {
                 return NotificationResponse.fromNotification(notification.get());
             } else {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to access this notification");

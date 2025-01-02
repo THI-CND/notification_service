@@ -3,7 +3,7 @@
 ## Übersicht
 
 Der Notification Service verwaltet Benachrichtigungen für Benutzer. 
-
+____
 ## Schnittstellen
 
 ### REST API
@@ -121,7 +121,7 @@ NotificationStatus status = 3;
 
 message NotificationResponse {
 int64 id = 1;
-string user = 2;
+string username = 2;
 string title = 3;
 string message = 4;
 NotificationStatus status = 5;

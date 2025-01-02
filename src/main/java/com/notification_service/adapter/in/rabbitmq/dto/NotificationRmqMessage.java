@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NonNull;
 
 @Data
-public class NotificationMessage {
+public class NotificationRmqMessage {
     @NonNull
     private String user;
     @NonNull

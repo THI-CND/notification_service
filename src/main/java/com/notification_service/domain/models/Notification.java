@@ -7,7 +7,7 @@ import lombok.*;
 public class Notification {
 
     private Long id;
-    private String user;
+    private String username;
     private String title;
     private String message;
     private NotificationStatus status;
@@ -15,4 +15,10 @@ public class Notification {
     public enum NotificationStatus {
         READ, UNREAD, DELETED
     }
+/*
+    static public Notification createNotificationFromRecipe(json, String title, String message) {
+        return new Notification(null, user, "neues rezept", message, NotificationStatus.UNREAD);
+    }
+
+ */
 }

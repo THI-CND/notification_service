@@ -1,7 +1,7 @@
 package com.notification_service.adapter.in.grpc;
 
-import com.notification_service.adapter.in.grpc.dto.GrpcDto;
-import com.notification_service.domain.NSService;
+import com.notification_service.adapter.in.grpc.dto.NotificationGrpcMapper;
+import com.notification_service.domain.NotificationService;
 import com.notification_service.domain.models.Notification;
 import com.notification_service.stubs.*;
 import io.grpc.Status;
@@ -9,26 +9,28 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 import java.util.List;
+import java.util.Optional;
 
 @GrpcService
-public class NSGrpcController extends NotificationServiceGrpc.NotificationServiceImplBase {
+public class NotificationGrpcController extends NotificationServiceGrpc.NotificationServiceImplBase {
 
-    private final NSService nsService;
+    private final NotificationService nsService;
 
-    public NSGrpcController(NSService nsService) {
+    public NotificationGrpcController(NotificationService nsService) {
         this.nsService = nsService;
     }
 
     @Override
     public void getAllNotifications(GetAllNotificationsRequest request, StreamObserver<GetAllNotificationsResponse> responseObserver) {
         List<Notification> notifications = nsService.getNotifications(request.getUsername());
-        responseObserver.onNext(GrpcDto.toGetAllNotificationsResponse(notifications));
+        responseObserver.onNext(NotificationGrpcMapper.toGetAllNotificationsResponse(notifications));
         responseObserver.onCompleted();
     }
 
     @Override
     public void getNotificationById(GetNotificationByIdRequest request, StreamObserver<NotificationResponse> responseObserver) {
-        handleNotificationResponse(request.getId(), request.getUsername(), responseObserver);
+        var notificationOpt = nsService.getNotificationById(request.getId());
+        handleNotificationResponse(notificationOpt, request.getUsername(), responseObserver);
     }
 
     @Override
@@ -43,20 +45,15 @@ public class NSGrpcController extends NotificationServiceGrpc.NotificationServic
                 request.getUsername(),
                 Notification.NotificationStatus.valueOf(request.getStatus().name())
         );
-        responseObserver.onNext(GrpcDto.toGetAllNotificationsResponse(notifications));
+        responseObserver.onNext(NotificationGrpcMapper.toGetAllNotificationsResponse(notifications));
         responseObserver.onCompleted();
     }
 
-    private void handleNotificationResponse(Long id, String username, StreamObserver<NotificationResponse> responseObserver) {
-        var notificationOpt = nsService.getNotificationById(id);
-        handleNotificationResponse(notificationOpt, username, responseObserver);
-    }
-
-    private void handleNotificationResponse(java.util.Optional<Notification> notificationOpt, String username, StreamObserver<NotificationResponse> responseObserver) {
+    private void handleNotificationResponse(Optional<Notification> notificationOpt, String username, StreamObserver<NotificationResponse> responseObserver) {
         if (notificationOpt.isPresent()) {
             Notification notification = notificationOpt.get();
-            if (notification.getUser().equals(username)) {
-                responseObserver.onNext(GrpcDto.toNotificationResponse(notification));
+            if (notification.getUsername().equals(username)) {
+                responseObserver.onNext(NotificationGrpcMapper.toNotificationResponse(notification));
                 responseObserver.onCompleted();
             } else {
                 responseObserver.onError(Status.PERMISSION_DENIED.withDescription("Access Denied").asException());
