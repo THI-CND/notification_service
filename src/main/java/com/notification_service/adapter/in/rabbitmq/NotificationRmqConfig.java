@@ -42,19 +42,5 @@ public class NotificationRmqConfig {
     public Jackson2JsonMessageConverter jackson2JsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
-
-
-    /*
-    @Bean
-    public Queue queueCollectionUpdated() {
-        return new Queue("collection.updated");
-    }
-
-    @Bean
-    public Binding bindingCollectionUpdated() {
-        return BindingBuilder.bind(queueCollectionUpdated()).to(exchange()).with("collection.updated.#");
-    }
-
-     */
 }
 

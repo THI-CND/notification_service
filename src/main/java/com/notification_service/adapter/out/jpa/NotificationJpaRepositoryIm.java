@@ -24,8 +24,13 @@ public class NotificationJpaRepositoryIm implements NotificationRepository {
     }
 
     @Override
+    public List<String> findAllUsernames() {
+        return repo.findAllUsernames();
+    }
+
+    @Override
     public void save(Notification notification) {
-        NotificationEntity entity = new NotificationEntity(notification.getUsername(), notification.getTitle(), notification.getMessage(), NotificationEntity.NotificationStatus.UNREAD);
+        NotificationEntity entity = new NotificationEntity(notification.getUsername(), notification.getTitle(), notification.getMessage(), NotificationEntity.NotificationStatus.valueOf(notification.getStatus().name()));
         repo.save(entity);
     }
 
