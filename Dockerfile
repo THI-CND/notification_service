@@ -27,6 +27,8 @@ RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then export JAVA_TOOL_OPTIONS="-XX
 FROM eclipse-temurin:23-alpine
 #FROM eclipse-temurin:17-jre
 
+ARG configuration=development
+ENV SPRING_PROFILES_ACTIVE=$configuration
 
 # Setze das Arbeitsverzeichnis
 WORKDIR /app
