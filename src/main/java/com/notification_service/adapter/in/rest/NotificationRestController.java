@@ -25,27 +25,23 @@ public class NotificationRestController {
 
     @GetMapping
     public List<NotificationResponse> getAllNotifications (@RequestParam String username) {
-        var notifications = nsService.getNotifications(username).stream().map(NotificationResponse::fromNotification).toList();
-        if (notifications.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT); // 204 No Content
-        }
-        return notifications;
+        return nsService.getNotifications(username)
+                .stream().map(NotificationResponse::fromNotification)
+                .toList();
     }
 
     @GetMapping ("/status/{status}")
-    public List<NotificationResponse> getAllNotificationsByStatus(@RequestParam String username, @PathVariable Notification.NotificationStatus status) {
-        var notifications = nsService.getNotificationsByStatus(username, status)
+    public List<NotificationResponse> getAllNotificationsByStatus(@RequestParam String username,
+                                                                  @PathVariable Notification.NotificationStatus status) {
+        return nsService.getNotificationsByStatus(username, status)
                 .stream()
                 .map(NotificationResponse::fromNotification)
                 .toList();
-        if (notifications.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT); // 204 No Content
-        }
-        return notifications;
     }
 
     @GetMapping ("/{id}")
-    public NotificationResponse getNotificationById(@RequestParam String username, @PathVariable Long id) {
+    public NotificationResponse getNotificationById(@RequestParam String username,
+                                                    @PathVariable Long id) {
         var notification = nsService.getNotificationById(id);
         if (notification.isPresent()) {
             if (notification.get().getUsername().equals(username)) {
@@ -59,7 +55,9 @@ public class NotificationRestController {
     }
 
     @PutMapping ("/{id}")
-    public NotificationResponse updateNotificationStatus(@RequestParam String username, @PathVariable Long id, @RequestBody NotificationRequest request) {
+    public NotificationResponse updateNotificationStatus(@RequestParam String username,
+                                                         @PathVariable Long id,
+                                                         @RequestBody NotificationRequest request) {
         var notification = nsService.updateNotificationStatus(id, request.getStatus());
         if (notification.isPresent()) {
             if (notification.get().getUsername().equals(username)) {

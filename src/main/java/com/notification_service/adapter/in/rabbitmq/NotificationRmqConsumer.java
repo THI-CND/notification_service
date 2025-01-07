@@ -1,5 +1,6 @@
 package com.notification_service.adapter.in.rabbitmq;
 
+import com.notification_service.adapter.in.rabbitmq.dto.NotificationRmqGenericMessageDto;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.AmqpHeaders;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class NotificationRmqConsumer {
@@ -21,19 +21,19 @@ public class NotificationRmqConsumer {
     @Value("${rabbitmq.routing.keys}")
     private List<String> allowedRoutingKeys;
 
-    public NotificationRmqConsumer(NotificationService nsService) {
-        this.notificationService = nsService;
+    public NotificationRmqConsumer(NotificationService notificationService) {
+        this.notificationService = notificationService;
     }
 
     @RabbitListener(queues = "${rabbitmq.queue.name}")
-    public void receiveMessage(@Payload Map<String, Object> payload, @Header(AmqpHeaders.RECEIVED_ROUTING_KEY) String key) {
+    public void receiveMessage(@Payload NotificationRmqGenericMessageDto messageDto, @Header(AmqpHeaders.RECEIVED_ROUTING_KEY) String key) {
         try {
-            logger.info("Received message <{}> and key <{}>", payload, key);
+            logger.info("Received message <{}> and key <{}>", messageDto, key);
             if (allowedRoutingKeys.contains(key)) {
-                logger.info("Processing message <{}>", payload);
-                notificationService.generateAndSaveNotification(payload, key);
+                logger.info("Processing message <{}>", messageDto);
+                notificationService.handleRmqMessage(messageDto, key);
             } else {
-                logger.info("Ignoring message <{}>", payload);
+                logger.info("Ignoring message <{}>", messageDto);
             }
         } catch (Exception e) {
             logger.error("Error processing message: {}", e.getMessage(), e);

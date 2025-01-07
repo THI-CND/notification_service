@@ -1,5 +1,6 @@
 package com.notification_service.application;
 
+import com.notification_service.adapter.in.rabbitmq.dto.NotificationRmqGenericMessageDto;
 import com.notification_service.domain.NotificationFactory;
 import com.notification_service.domain.NotificationService;
 import com.notification_service.domain.models.Notification;
@@ -7,7 +8,6 @@ import com.notification_service.ports.outgoing.NotificationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -15,6 +15,8 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationFactory factory;
     private final NotificationRepository repository;
+
+    private static final String USER_COUNT = "user.count";
 
     public NotificationServiceImpl(NotificationFactory factory, NotificationRepository repository) {
         this.factory = factory;
@@ -24,38 +26,6 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public List<Notification> getNotifications(String username) {
         return repository.findByUser(username);
-    }
-
-    @Override
-    public void generateAndSaveNotification(Map<String, Object> payload, String routingKey) {
-        Notification notification = null;
-        Map<String, String> notificationContent = null;
-
-
-        if ("collection.created".equals(routingKey)) {
-            notification = factory.collectionCreatedNotification(payload);
-        } else if ("collection.updated".equals(routingKey)) {
-            notification = factory.collectionUpdatedNotification(payload);
-        } else if ("collection.deleted".equals(routingKey)) {
-            notification = factory.collectionDeletedNotification(payload);
-        } else if ("review.created".equals(routingKey)) {
-            notification = factory.reviewCreatedNotification(payload);
-        } else if ("user.count".equals(routingKey)) {
-            notificationContent = factory.numberOfUsersNotification(payload);
-
-            List<String> allUsernames = repository.findAllUsernames();
-            for (String username : allUsernames) {
-                if (username != null && !username.isEmpty()) {
-                    Notification userNotification = new Notification(
-                            null, username, notificationContent.get("title"), notificationContent.get("message"), Notification.NotificationStatus.UNREAD
-                    );
-                    repository.save(userNotification);
-                }
-            }
-        }
-        if (notification != null) {
-            repository.save(notification);
-        }
     }
 
     @Override
@@ -70,6 +40,29 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Optional<Notification> updateNotificationStatus(Long id, Notification.NotificationStatus status) {
-        return repository.updateStatus(id, status);
+        Optional<Notification> notification = repository.findById(id);
+        notification.ifPresent(n -> {
+            n.setStatus(status);
+            repository.save(n);
+        });
+        return notification;
+    }
+
+    @Override
+    public void handleRmqMessage(NotificationRmqGenericMessageDto messageDto, String routingKey) {
+        if (USER_COUNT.equals(routingKey)) {
+            handleNotificationsForAllUsers(messageDto);
+        } else {
+            Notification notification = factory.createNotification(messageDto, routingKey);
+            repository.save(notification);
+        }
+    }
+
+    private void handleNotificationsForAllUsers(NotificationRmqGenericMessageDto messageDto) {
+        List<String> allUsernames = repository.findAllUsernames();
+        for (String username : allUsernames) {
+            Notification notification = factory.createNotificationForUserCountUpdate(messageDto, username);
+            repository.save(notification);
+        }
     }
 }

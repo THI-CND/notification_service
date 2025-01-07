@@ -1,57 +1,64 @@
 package com.notification_service.domain;
 
+import com.notification_service.adapter.in.rabbitmq.dto.NotificationRmqGenericMessageDto;
 import com.notification_service.domain.models.Notification;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class NotificationFactory {
 
-    public Notification collectionCreatedNotification(Map<String, Object> payload) {
-        String name = (String) payload.get("name");
-        String username = (String) payload.get("author");
+    private static final String COLLECTION_CREATED = "collection.created";
+    private static final String COLLECTION_UPDATED = "collection.updated";
+    private static final String COLLECTION_DELETED = "collection.deleted";
+    private static final String REVIEW_CREATED = "review.created";
 
-        String title = "Collection created!";
-        String message = "Hello " + username + ", your new collection \"" + name + "\" has been created successfully!";
-        return new Notification(null, username, title, message, Notification.NotificationStatus.UNREAD);
+    public Notification createNotification(NotificationRmqGenericMessageDto messageDto, String routingKey) {
+        String username = (String) messageDto.getAuthor();
+
+        if (username == null || messageDto.getName() == null) {
+            throw new IllegalArgumentException("The messaage does not contain the necessary fields");
+        }
+
+        String title;
+        String message = switch (routingKey) {
+            case COLLECTION_CREATED -> {
+                title = "Collection created!";
+                yield "Hello " + username + ", your new collection \"" + messageDto.getName() + "\" has been created successfully!";
+            }
+            case COLLECTION_UPDATED -> {
+                title = "Collection updated!";
+                yield "Hello " + username + ", your collection \"" + messageDto.getName()  + "\" has been updated successfully!";
+            }
+            case COLLECTION_DELETED -> {
+                title = "Collection deleted!";
+                yield "Hello " + username + ", your collection \"" + messageDto.getName()  + "\" has been deleted successfully!";
+            }
+            case REVIEW_CREATED -> {
+                title = "Review created!";
+                yield "Hello " + username + ", your review has been created successfully!";
+            }
+            default -> throw new IllegalArgumentException("Unknown routing key: " + routingKey);
+        };
+
+        return new Notification(
+                null,
+                username,
+                title,
+                message,
+                Notification.NotificationStatus.UNREAD
+        );
     }
 
-    public Notification collectionUpdatedNotification(Map<String, Object> payload) {
-        String name = (String) payload.get("name");
-        String username = (String) payload.get("author");
-
-        String title = "Collection updated!";
-        String message = "Hello " + username + ", your collection \"" + name + "\" has been updated successfully!";
-        return new Notification(null, username, title, message, Notification.NotificationStatus.UNREAD);
-    }
-
-    public Notification collectionDeletedNotification(Map<String, Object> payload) {
-        String name = (String) payload.get("name");
-        String username = (String) payload.get("author");
-
-        String title = "Collection deleted!";
-        String message = "Hello " + username + ", your collection \"" + name + "\" has been deleted successfully!";
-        return new Notification(null, username, title, message, Notification.NotificationStatus.UNREAD);
-    }
-
-    public Notification reviewCreatedNotification(Map<String, Object> payload) {
-        String username = (String) payload.get("author");
-
-        String title = "Review created!";
-        String message = "Hello " + username + ", your review has been created successfully!";
-        return new Notification(null, username, title, message, Notification.NotificationStatus.UNREAD);
-    }
-
-    public Map<String, String > numberOfUsersNotification(Map<String, Object> payload) {
-        int numberOfUsers = (int) payload.get("numberOfUsers");
+    public Notification createNotificationForUserCountUpdate(NotificationRmqGenericMessageDto messageDto, String username) {
         String title = "User count updated!";
-        String message = "The number of users is now " + numberOfUsers + "!";
+        String message = "Hello " + username + ", the number of users is now " + messageDto.getNumberOfUsers() + "!";
 
-        Map<String, String> result = new HashMap<>();
-        result.put("title", title);
-        result.put("message", message);
-        return result;
+        return new Notification(
+                null,
+                username,
+                title,
+                message,
+                Notification.NotificationStatus.UNREAD
+        );
     }
 }
