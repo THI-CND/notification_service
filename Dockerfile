@@ -11,7 +11,7 @@ RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then export JAVA_TOOL_OPTIONS="-XX
 
 COPY src ./src
 RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then export JAVA_TOOL_OPTIONS="-XX:UseSVE=0"; fi && \
-    mvn clean package \
+    mvn clean package
 
 FROM eclipse-temurin:23-alpine
 
