@@ -1,5 +1,7 @@
 # Notification Service
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=THI-CND_notification_service&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=THI-CND_notification_service)
+
 ## Übersicht
 
 Der Notification Service verwaltet Benachrichtigungen für Benutzer. 
