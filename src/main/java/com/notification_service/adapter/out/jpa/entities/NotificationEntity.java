@@ -34,4 +34,14 @@ public class NotificationEntity {
     public Notification toNotification() {
         return new Notification(getId(), getUsername(), getTitle(), getMessage(), Notification.NotificationStatus.valueOf(getStatus().name()));
     }
+
+    public static NotificationEntity fromNotification(Notification notification) {
+        return new NotificationEntity(
+                notification.getId(),
+                notification.getUsername(),
+                notification.getTitle(),
+                notification.getMessage(),
+                NotificationStatus.valueOf(notification.getStatus().name())
+        );
+    }
 }
