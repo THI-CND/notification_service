@@ -24,8 +24,13 @@ public class NotificationJpaRepositoryIm implements NotificationRepository {
     }
 
     @Override
+    public List<String> findAllUsernames() {
+        return repo.findAllUsernames();
+    }
+
+    @Override
     public void save(Notification notification) {
-        NotificationEntity entity = new NotificationEntity(notification.getUsername(), notification.getTitle(), notification.getMessage(), NotificationEntity.NotificationStatus.UNREAD);
+        NotificationEntity entity = new NotificationEntity(notification.getUsername(), notification.getTitle(), notification.getMessage(), NotificationEntity.NotificationStatus.valueOf(notification.getStatus().name()));
         repo.save(entity);
     }
 
@@ -40,14 +45,5 @@ public class NotificationJpaRepositoryIm implements NotificationRepository {
     public Optional<Notification> findById(Long id) {
         return repo.findById(id).map(NotificationEntity::toNotification);
     }
-
-    @Override
-    public Optional<Notification> updateStatus(Long id, Notification.NotificationStatus status) {
-        return repo.findById(id).map(entity -> {
-            entity.setStatus(NotificationEntity.NotificationStatus.valueOf(status.name()));
-            return repo.save(entity).toNotification();
-        });
-    }
-
 }
 
