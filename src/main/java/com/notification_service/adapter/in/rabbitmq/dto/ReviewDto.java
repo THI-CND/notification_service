@@ -4,7 +4,6 @@ import com.notification_service.domain.models.Notification;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.List;
 
 @Data
 @AllArgsConstructor
