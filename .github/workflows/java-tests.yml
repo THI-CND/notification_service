@@ -3,6 +3,7 @@ name: Java Tests
 on:
   pull_request:
     branches:
+      - 'main'
       - 'next'
 
 jobs:
