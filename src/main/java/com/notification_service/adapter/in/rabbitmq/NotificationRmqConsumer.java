@@ -69,13 +69,15 @@ public class NotificationRmqConsumer {
     public void handleUserMessages(UserDto messageDto, @Header(AmqpHeaders.RECEIVED_ROUTING_KEY) String routingKey) {
         try {
             if ("users.count".equals(routingKey)) {
-                List<String> usernames = notificationService.getAllUsernames();
-                for (String username : usernames) {
+                if (messageDto.getUserCount() % 5 == 0) {
+                    List<String> usernames = notificationService.getAllUsernames();
+                    for (String username : usernames) {
 
-                    Notification notification = messageDto.createUserCountNotification(username);
-                    notificationService.saveNotification(notification);
+                        Notification notification = messageDto.createUserCountNotification(username);
+                        notificationService.saveNotification(notification);
 
-                    logger.info("Notification processed and saved for User: {}", notification);
+                        logger.info("Notification processed and saved for User: {}", notification);
+                    }
                 }
             } else {
                 throw new IllegalArgumentException("Unknown routing key: " + routingKey);
