@@ -14,34 +14,34 @@ import java.util.Optional;
 @GrpcService
 public class NotificationGrpcController extends NotificationServiceGrpc.NotificationServiceImplBase {
 
-    private final NotificationService nsService;
+    private final NotificationService notificationService;
 
     public NotificationGrpcController(NotificationService nsService) {
-        this.nsService = nsService;
+        this.notificationService = nsService;
     }
 
     @Override
     public void getAllNotifications(GetAllNotificationsRequest request, StreamObserver<GetAllNotificationsResponse> responseObserver) {
-        List<Notification> notifications = nsService.getNotifications(request.getUsername());
+        List<Notification> notifications = notificationService.getNotifications(request.getUsername());
         responseObserver.onNext(NotificationGrpcMapper.toGetAllNotificationsResponse(notifications));
         responseObserver.onCompleted();
     }
 
     @Override
     public void getNotificationById(GetNotificationByIdRequest request, StreamObserver<NotificationResponse> responseObserver) {
-        var notificationOpt = nsService.getNotificationById(request.getId());
+        var notificationOpt = notificationService.getNotificationById(request.getId());
         handleNotificationResponse(notificationOpt, request.getUsername(), responseObserver);
     }
 
     @Override
     public void updateNotificationStatus(UpdateNotificationStatusRequest request, StreamObserver<NotificationResponse> responseObserver) {
-        var notificationOpt = nsService.updateNotificationStatus(request.getId(), Notification.NotificationStatus.valueOf(request.getStatus().name()));
+        var notificationOpt = notificationService.updateNotificationStatus(request.getId(), Notification.NotificationStatus.valueOf(request.getStatus().name()));
         handleNotificationResponse(notificationOpt, request.getUsername(), responseObserver);
     }
 
     @Override
     public void getNotificationsByStatus(GetNotificationsByStatusRequest request, StreamObserver<GetAllNotificationsResponse> responseObserver) {
-        var notifications = nsService.getNotificationsByStatus(
+        var notifications = notificationService.getNotificationsByStatus(
                 request.getUsername(),
                 Notification.NotificationStatus.valueOf(request.getStatus().name())
         );

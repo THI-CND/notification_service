@@ -1,5 +1,7 @@
 # Notification Service
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=THI-CND_notification_service&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=THI-CND_notification_service)
+
 ## Übersicht
 
 Der Notification Service verwaltet Benachrichtigungen für Benutzer. 
@@ -8,13 +10,13 @@ ____
 
 ### REST API
 
-#### GET /notifications
+#### GET /api/v1/notifications
 
 Ruft alle Benachrichtigungen für einen bestimmten Benutzer ab.
 
 **Request:**
 - Methode: GET
-- URL: `/notifications`
+- URL: `/api/v1/notifications`
 - Parameter:
   - `username` (String): Der Benutzername des Benutzers, dessen Benachrichtigungen abgerufen werden sollen.
 
@@ -23,15 +25,15 @@ Ruft alle Benachrichtigungen für einen bestimmten Benutzer ab.
 - Body: Eine Liste von Benachrichtigungen.
 
 **Beispiel:**
-GET "http://localhost:8080/notifications?username=Bernd"
+GET "http://localhost:8080/api/v1/notifications?username=Bernd"
 
-#### GET /notifications/status/{status}
+#### GET /api/v1/notifications/status/{status}
 
 Ruft alle Benachrichtigungen mit einem bestimmten Status für einen bestimmten Benutzer ab.
 
 **Request:**
 - Methode: GET
-- URL: `/notifications/status/{status}`
+- URL: `/api/v1/notifications/status/{status}`
 - Parameter:
   - `username` (String): Der Benutzername des Benutzers, dessen Benachrichtigungen abgerufen werden sollen.
   - `status` (Notification.NotificationStatus): Der Status der Benachrichtigungen (READ, UNREAD, DELETED).
@@ -41,15 +43,15 @@ Ruft alle Benachrichtigungen mit einem bestimmten Status für einen bestimmten B
 - Body: Eine Liste von Benachrichtigungen.
 
 **Beispiel:**
-GET "http://localhost:8080/notifications/status/UNREAD?username=Bernd"
+GET "http://localhost:8080/api/v1/notifications/status/UNREAD?username=Bernd"
 
-#### PUT /notifications/{id}
+#### PUT /api/v2/notifications/{id}
 
 Aktualisiert den Status einer Benachrichtigung.
 
 **Request:**
 - Methode: PUT
-- URL: `/notifications/{id}`
+- URL: `/api/v2/notifications/{id}`
 - Parameter:
   - `username` (String): Der Benutzername des Benutzers, der die Benachrichtigung aktualisiert.
   - `id` (Long): Die ID der Benachrichtigung.
@@ -65,7 +67,7 @@ Aktualisiert den Status einer Benachrichtigung.
 - Body: Die aktualisierte Benachrichtigung.
 
 **Beispiel:**
-PUT "http://localhost:8080/notifications/1?username=Bernd"
+PUT "http://localhost:8080/api/v2/notifications/1?username=Bernd"
 ```json
 {
   "status": "READ"

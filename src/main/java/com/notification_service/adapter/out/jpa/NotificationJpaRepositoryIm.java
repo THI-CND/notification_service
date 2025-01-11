@@ -30,13 +30,12 @@ public class NotificationJpaRepositoryIm implements NotificationRepository {
 
     @Override
     public void save(Notification notification) {
-        NotificationEntity entity = new NotificationEntity(notification.getUsername(), notification.getTitle(), notification.getMessage(), NotificationEntity.NotificationStatus.valueOf(notification.getStatus().name()));
+        NotificationEntity entity = NotificationEntity.fromNotification(notification);
         repo.save(entity);
     }
 
     @Override
     public List<Notification> findByUserAndStatus(String username, Notification.NotificationStatus status) {
-
         return repo.findByUsernameAndStatus(username, NotificationEntity.NotificationStatus.valueOf(status.name())).stream()
                 .map(NotificationEntity::toNotification).toList();
     }

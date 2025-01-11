@@ -1,7 +1,5 @@
 package com.notification_service.adapter.in.rest;
 
-
-import com.notification_service.adapter.in.rest.dto.NotificationRequest;
 import com.notification_service.adapter.in.rest.dto.NotificationResponse;
 import com.notification_service.domain.NotificationService;
 import com.notification_service.domain.models.Notification;
@@ -13,19 +11,19 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 
-@RequestMapping("/notifications")
+@RequestMapping("/api/v1/notifications")
 @RestController
-public class NotificationRestController {
+public class NotificationRestControllerV1 {
 
-    private final NotificationService nsService;
+    private final NotificationService notificationService;
 
-    public NotificationRestController(NotificationService nsService) {
-        this.nsService = nsService;
+    public NotificationRestControllerV1(NotificationService notificationService) {
+        this.notificationService = notificationService;
     }
 
     @GetMapping
     public List<NotificationResponse> getAllNotifications (@RequestParam String username) {
-        return nsService.getNotifications(username)
+        return notificationService.getNotifications(username)
                 .stream().map(NotificationResponse::fromNotification)
                 .toList();
     }
@@ -33,7 +31,7 @@ public class NotificationRestController {
     @GetMapping ("/status/{status}")
     public List<NotificationResponse> getAllNotificationsByStatus(@RequestParam String username,
                                                                   @PathVariable Notification.NotificationStatus status) {
-        return nsService.getNotificationsByStatus(username, status)
+        return notificationService.getNotificationsByStatus(username, status)
                 .stream()
                 .map(NotificationResponse::fromNotification)
                 .toList();
@@ -42,23 +40,7 @@ public class NotificationRestController {
     @GetMapping ("/{id}")
     public NotificationResponse getNotificationById(@RequestParam String username,
                                                     @PathVariable Long id) {
-        var notification = nsService.getNotificationById(id);
-        if (notification.isPresent()) {
-            if (notification.get().getUsername().equals(username)) {
-                return NotificationResponse.fromNotification(notification.get());
-            } else {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to access this notification");
-            }
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Notification not found");
-        }
-    }
-
-    @PutMapping ("/{id}")
-    public NotificationResponse updateNotificationStatus(@RequestParam String username,
-                                                         @PathVariable Long id,
-                                                         @RequestBody NotificationRequest request) {
-        var notification = nsService.updateNotificationStatus(id, request.getStatus());
+        var notification = notificationService.getNotificationById(id);
         if (notification.isPresent()) {
             if (notification.get().getUsername().equals(username)) {
                 return NotificationResponse.fromNotification(notification.get());

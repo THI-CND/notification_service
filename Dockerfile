@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY pom.xml .
 
-# Workaround für das Problem, dass die JVM auf ARM64-Systemen nicht startet
+# Workaround für das Problem, dass Java 21+ auf ARM64 mit MacOS Sequoia 15.2 nicht funktioniert
 ARG TARGETPLATFORM
 RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then export JAVA_TOOL_OPTIONS="-XX:UseSVE=0"; fi && \
     mvn dependency:go-offline
