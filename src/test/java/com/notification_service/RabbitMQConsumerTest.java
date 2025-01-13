@@ -16,7 +16,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 
-class NotificationRmqConsumerTest {
+class RabbitMQConsumerTest {
 
     @Mock
     private NotificationService notificationService;

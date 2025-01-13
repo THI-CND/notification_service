@@ -17,8 +17,8 @@ public class ReviewDto {
 
     public Notification createReviewCreatedNotification() {
         validateFields();
-        String title = "Review created!";
-        String message = "Hello " + author + ", your review for recipe " + recipeId + " has been created successfully!";
+        String title = "Bewertung erstellt!";
+        String message = "Hallo " + author + ", deine Bewertung für das Rezept " + recipeId + " wurde erfolgreich erstellt!";
         return new Notification(null, author, title, message, Notification.NotificationStatus.UNREAD);
     }
 

@@ -18,22 +18,22 @@ public class CollectionDto {
 
     public Notification createCollectionCreatedNotification() {
         validateFields();
-        String title = "Collection created!";
-        String message = "Hello " + author + ", your new collection \"" + name + "\" has been created successfully!";
+        String title = "Sammlung erstellt!";
+        String message = "Hallo " + author + ", deine neue Sammlung \"" + name + "\" wurde erfolgreich erstellt!";
         return new Notification(null, author, title, message, Notification.NotificationStatus.UNREAD);
     }
 
     public Notification createCollectionUpdatedNotification() {
         validateFields();
-        String title = "Collection updated!";
-        String message = "Hello " + author + ", your collection \"" + name + "\" has been updated successfully!";
+        String title = "Sammlung aktualisiert!";
+        String message = "Hallo " + author + ", deine Sammlung \"" + name + "\" wurde erfolgreich aktualisiert!";
         return new Notification(null, author, title, message, Notification.NotificationStatus.UNREAD);
     }
 
     public Notification createCollectionDeletedNotification() {
         validateFields();
-        String title = "Collection deleted!";
-        String message = "Hello " + author + ", your collection \"" + name + "\" has been deleted successfully!";
+        String title = "Sammlung gelöscht!";
+        String message = "Hallo " + author + ", deine Sammlung \"" + name + "\" wurde erfolgreich gelöscht!";
         return new Notification(null, author, title, message, Notification.NotificationStatus.UNREAD);
     }
 
@@ -42,4 +42,8 @@ public class CollectionDto {
             throw new IllegalArgumentException("The message does not contain the necessary fields");
         }
     }
+
+
+
+
 }
