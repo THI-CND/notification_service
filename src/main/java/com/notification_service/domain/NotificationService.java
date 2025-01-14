@@ -11,5 +11,4 @@ public interface NotificationService {
     Optional<Notification> getNotificationById(Long id);
     Optional<Notification> updateNotificationStatus(Long id, Notification.NotificationStatus status);
     void saveNotification(Notification notification);
-    List<String> getAllUsernames();
 }
