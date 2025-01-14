@@ -92,6 +92,8 @@ Die folgenden Umgebungsvariablen werden zur Konfiguration des Dienstes verwendet
 - `RABBITMQ_QUEUE_COLLECTION`: Queue für den Collection-Service.
 - `RABBITMQ_QUEUE_REVIEW`: Queue für den Review-Service.
 - `RABBITMQ_QUEUE_USER`: Queue für den User-Service.
+- `GRPC_USER_SERVICE_HOST`: gRPC Host des User-Service.
+- `GRPC_USER_SERVICE_PORT`: gRPC Port des User-Service.
 
 ### Profile
 
@@ -293,28 +295,14 @@ public void handleCollectionMessages(@Payload CollectionDto messageDto, @Header(
 }
 ```
 
-### RabbitMQ Message Format
-
-Eine RabbitMQ-Nachricht muss das folgende JSON-Format haben, damit sie korrekt verarbeitet wird:
-"message" und "status" sind optional.
-
-```json
-{
-  "user": "string",
-  "title": "string",
-  "message": "string",
-  "status": "READ | UNREAD | DELETED"
-}
-```
-
 ## Datenmodell Notifications
 
 Zur Speicherung der Benachrichtigungen wird folgendes Modell verwendet:
 
-| Spalte   | Typ           | Beschreibung                |
-| -------- | ------------- | --------------------------- |
-| id       | Long          | Auto-incrementing ID        |
-| username | String        | Name des Benutzers          |
-| title    | String        | Titel der Benachrichtigung  |
-| message  | String        | Inhalt der Benachrichtigung |
-| status   | Enum (String) | Status der Benachrichtigung |
+| Spalte   | Typ           | Beschreibung                                        |
+|----------|---------------|-----------------------------------------------------|
+| id       | Long          | Auto-incrementing ID                                |
+| username | String        | Name des Benutzers                                  |
+| title    | String        | Titel der Benachrichtigung                          |
+| message  | String        | Inhalt der Benachrichtigung                         |
+| status   | Enum (String) | Status der Benachrichtigung (READ, UNREAD, DELETED) |
