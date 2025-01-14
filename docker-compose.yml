@@ -1,6 +1,6 @@
 services:
   rabbitmq:
-    image: rabbitmq:4.0.3-management
+    image: rabbitmq:3-management
     restart: unless-stopped
     ports:
       - "5672:5672"
@@ -14,24 +14,21 @@ services:
       retries: 5
 
   postgres:
-    build: .
-    restart: unless-stopped
+    image: postgres:17.0
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
+      POSTGRES_DB: notification
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_MULTIPLE_DATABASES: notification
 
   notification-service:
     image: ghcr.io/thi-cnd/notification_service:latest
-    volumes:
-      - ./notification-service:/code
     ports:
-      - "8081:8080"
-      - "9091:9090"
+      - "8080:8080" # REST-Server Port
+      - "9090:9090" # gRPC-Server Port
     environment:
       DB_USER: postgres
       DB_PASSWORD: password
@@ -47,7 +44,6 @@ services:
       RABBITMQ_QUEUE_COLLECTION: collection.queue
       RABBITMQ_QUEUE_REVIEW: review.queue
       RABBITMQ_QUEUE_USER: user.queue
-      JAVA_TOOL_OPTIONS: "-XX:UseSVE=0" #Fix for ARM64 Bug
     restart: unless-stopped
     depends_on:
       postgres:

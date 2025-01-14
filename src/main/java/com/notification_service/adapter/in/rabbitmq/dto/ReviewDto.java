@@ -9,7 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class ReviewDto {
     private Long id;
-    private Long recipeId;
+    private String recipeId;
     private String author;
     private float rating;
     private String comment;
