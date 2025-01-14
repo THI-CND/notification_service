@@ -7,8 +7,8 @@
 Der **Notification Service** verwaltet Benachrichtigungen für Benutzer. Er unterstützt sowohl REST- als auch gRPC-Schnittstellen und integriert RabbitMQ als Message Broker zum Empfangen von Events. Eine PostgreSQL-Datenbank dient als Datenspeicher.
 
 ## Architektur
-
-![Architektur](./media/Notification_Service_Hex_Architecture.svg)
+Die Architektur des Notification Service folgt den Prinzipien der Hexagonalen Architektur, auch bekannt als Ports und Adapters. Dieses Designmuster stellt eine klare Trennung der Verantwortlichkeiten sicher, wodurch das System wartbarer und anpassungsfähiger an Änderungen wird. Abhängigkeiten verlaufen dabei von außen nach innen.
+![Architektur](./media/Notification_Service_Hex_Architecture.png)
 
 ## Installation und Start
 
