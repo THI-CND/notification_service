@@ -3,7 +3,7 @@ package com.notification_service;
 
 import com.notification_service.application.NotificationServiceImpl;
 import com.notification_service.domain.models.Notification;
-import com.notification_service.ports.outgoing.NotificationRepository;
+import com.notification_service.ports.out.NotificationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;

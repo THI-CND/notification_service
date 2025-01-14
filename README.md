@@ -6,6 +6,10 @@
 
 Der **Notification Service** verwaltet Benachrichtigungen für Benutzer. Er unterstützt sowohl REST- als auch gRPC-Schnittstellen und integriert RabbitMQ als Message Broker zum Empfangen von Events. Eine PostgreSQL-Datenbank dient als Datenspeicher.
 
+## Architektur
+
+![Architektur](./media/Notification_Service_Hex_Architecture.svg)
+
 ## Installation und Start
 
 ### Voraussetzungen

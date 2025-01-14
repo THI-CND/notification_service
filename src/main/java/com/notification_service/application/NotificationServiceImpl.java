@@ -2,7 +2,7 @@ package com.notification_service.application;
 
 import com.notification_service.domain.NotificationService;
 import com.notification_service.domain.models.Notification;
-import com.notification_service.ports.outgoing.NotificationRepository;
+import com.notification_service.ports.out.NotificationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
