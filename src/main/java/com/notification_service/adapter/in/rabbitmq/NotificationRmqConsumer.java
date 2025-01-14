@@ -3,7 +3,9 @@ package com.notification_service.adapter.in.rabbitmq;
 import com.notification_service.adapter.in.rabbitmq.dto.CollectionDto;
 import com.notification_service.adapter.in.rabbitmq.dto.ReviewDto;
 import com.notification_service.adapter.in.rabbitmq.dto.UserDto;
+import com.notification_service.domain.UserService;
 import com.notification_service.domain.models.Notification;
+import com.notification_service.domain.models.User;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.AmqpHeaders;
 import org.springframework.messaging.handler.annotation.Header;
@@ -18,10 +20,12 @@ import java.util.List;
 @Component
 public class NotificationRmqConsumer {
     private final NotificationService notificationService;
+    private final UserService userService;
     private static final Logger logger = LoggerFactory.getLogger(NotificationRmqConsumer.class);
 
-    public NotificationRmqConsumer(NotificationService notificationService) {
+    public NotificationRmqConsumer(NotificationService notificationService, UserService userService) {
         this.notificationService = notificationService;
+        this.userService = userService;
     }
 
     @RabbitListener(queues = "${rabbitmq.queue.collection}")
@@ -69,14 +73,15 @@ public class NotificationRmqConsumer {
     public void handleUserMessages(UserDto messageDto, @Header(AmqpHeaders.RECEIVED_ROUTING_KEY) String routingKey) {
         try {
             if ("users.count".equals(routingKey)) {
+                // Send a notification to all users every 5th user
                 if (messageDto.getUserCount() % 5 == 0) {
-                    List<String> usernames = notificationService.getAllUsernames();
-                    for (String username : usernames) {
+                    List<User> users = userService.getAllUsers();
+                    List<String> usernames = users.stream().map(User::getUsername).toList();
 
+                    for (String username : usernames) {
                         Notification notification = messageDto.createUserCountNotification(username);
                         notificationService.saveNotification(notification);
-
-                        logger.info("Notification processed and saved for User: {}", notification);
+                        logger.info("Notification processed and saved for User: {}", username);
                     }
                 }
             } else {

@@ -1,22 +1,27 @@
 package com.notification_service.application;
 
 import com.notification_service.domain.NotificationService;
+import com.notification_service.domain.UserService;
 import com.notification_service.domain.models.Notification;
+import com.notification_service.domain.models.User;
 import com.notification_service.ports.out.NotificationRepository;
+import com.notification_service.ports.out.UserProvider;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class NotificationServiceImpl implements NotificationService {
+public class NotificationServiceImpl implements NotificationService, UserService {
 
     private final NotificationRepository repository;
+    private final UserProvider userProvider;
 
-    public NotificationServiceImpl(NotificationRepository repository) {
+    public NotificationServiceImpl(NotificationRepository repository, UserProvider userPovider) {
         this.repository = repository;
+        this.userProvider = userPovider;
     }
-    
+
     @Override
     public List<Notification> getNotifications(String username) {
         return repository.findByUser(username);
@@ -49,8 +54,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<String> getAllUsernames() {
-        return repository.findAllUsernames();
+    public List<User> getAllUsers() {
+        return userProvider.listUsers();
     }
-
 }
