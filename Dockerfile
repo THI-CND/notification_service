@@ -5,10 +5,7 @@ WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 
-# Workaround für das Problem, dass Java 21+ auf ARM64 M mit MacOS Sequoia 15.2 nicht funktioniert
-ARG TARGETPLATFORM
-RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then export JAVA_TOOL_OPTIONS="-XX:UseSVE=0"; fi && \
-    mvn clean install -DskipTests
+RUN mvn clean install -DskipTests
 
 FROM eclipse-temurin:23-alpine
 
