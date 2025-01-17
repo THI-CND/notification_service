@@ -306,3 +306,4 @@ Zur Speicherung der Benachrichtigungen wird folgendes Modell verwendet:
 | title    | String        | Titel der Benachrichtigung                          |
 | message  | String        | Inhalt der Benachrichtigung                         |
 | status   | Enum (String) | Status der Benachrichtigung (READ, UNREAD, DELETED) |
+
