@@ -30,6 +30,7 @@ services:
       - "8080:8080" # REST-Server Port
       - "9090:9090" # gRPC-Server Port
     environment:
+      SPRING_PROFILES_ACTIVE: development
       DB_USER: postgres
       DB_PASSWORD: password
       DB_URL: jdbc:postgresql://postgres:5432/notification
