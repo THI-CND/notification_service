@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com</groupId>
 	<artifactId>notification-service</artifactId>
-	<version>1.5.4-next.3</version>
+	<version>1.5.5</version>
 	<name>notification-service</name>
 	<description>notification service project</description>
 	<url/>
