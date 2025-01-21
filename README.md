@@ -78,6 +78,7 @@ Um den Notification Service auszuführen, sind folgende Tools erforderlich:
 
 Die folgenden Umgebungsvariablen werden zur Konfiguration des Dienstes verwendet:
 
+- `SPRING_PROFILES_ACTIVE`: Das Applikations-Profil.
 - `DB_USER`: Der Datenbankbenutzer.
 - `DB_PASSWORD`: Das Datenbankpasswort.
 - `DB_URL`: Die URL inklusive Port der Datenbank.
